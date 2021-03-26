@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3 card-spacing" *ngFor="let recipe of recipe">
+      <mat-card >
+        <mat-card-header>
+          <mat-card-title>{{recipe?.recipeName}}</mat-card-title>
+          <mat-card-subtitle>{{recipe?.cuisine}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image style="padding-left: 24px;" src="https://material.angular.io/assets/img/examples/shiba2.jpg(96 kB)
+        https://material.angular.io/assets/img/examples/shiba2.jpg
+        " alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <p>
+            Recipe Description
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-stroked-button color="warn">View</button>
+          <button mat-stroked-button color="warn">Try</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

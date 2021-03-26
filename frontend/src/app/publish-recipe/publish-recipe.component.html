@@ -1,0 +1,868 @@
+<body>
+
+
+<app-loggednavbar [name]="name"></app-loggednavbar>
+
+
+<div style="height: 100%;">
+   .
+<div style="align-items: center; margin-bottom: -8%;">
+
+  </div>
+<div style="margin-top: 200px; margin-left: 10%; margin-bottom: -20%;margin-right: 10%; padding: 20px; background: #CB202D;">
+
+
+  <!-- <img src=""/> -->
+
+  <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+      {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+    </button> -->
+    <mat-horizontal-stepper [linear]="true" #stepper>
+
+      <!-- First stage of recipe publishing -->
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>Fill recipe details</ng-template>
+
+
+              <div class="row" >
+                <div class="col-sm-4" >
+
+                    <div class="container crop" style="padding: 15px;">
+
+                        <img *ngIf=imageview src="{{urll1}}" alt="recipe image" class="image" style="width:100%;opacity: 0.5;">
+                        <img *ngIf=!imageview src="{{urll1}}" alt="recipe image" class="image" style="width:100%;opacity: 1;">
+                        <div class="middle">
+
+                          <div>
+                              <button *ngIf=imageview style="padding: 20px;">
+                                  <app-file-upload (complete)="onFileComplete1($event)"  required ></app-file-upload>
+                              </button>
+                          </div>
+                        </div>
+                      </div>
+
+                </div>
+                <div class="col-sm-8">
+
+                      <mat-form-field class="example-full-width" >
+                          <input #recipeName matInput placeholder="Name" formControlName="firstCtrl" required maxlength="30" (mouseup)="enableOption($event)" >
+                          <mat-hint align="end">{{recipeName.value.length}} / 30</mat-hint>
+                      </mat-form-field>
+
+                  <div class="row">
+                    <div class="col-sm-8" >
+                        <mat-form-field class="example-full-width">
+                            <input #cusine type="text" placeholder="Cusine" aria-label="Number" matInput [formControl]="myControl1" [matAutocomplete]="auto" (mouseup)="enableOption($event)">
+                              <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let option1 of filteredOptions1 | async" [value]="option1">
+                                  {{option1}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            <!-- <input #cusine matInput placeholder="Cusine" > -->
+                          </mat-form-field>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field>
+
+                            <input #type type="text" placeholder="Course" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto2" (mouseup)="enableOption($event)">
+                            <mat-autocomplete #auto2="matAutocomplete">
+                              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                {{option}}
+                              </mat-option>
+                            </mat-autocomplete>
+
+                          <!-- <mat-label #course>Course</mat-label>
+                          <select #type matNativeControl required>
+                            <option value="Starter">Starters</option>
+                            <option value="Main Course">Main Course</option>
+                            <option value="Dessert">Dessert</option>
+                            <option value="Beverage">Beverage</option>
+                          </select> -->
+                        </mat-form-field>
+                      </div>
+
+
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="row" style="padding: 15px;margin-left: 10px" >
+                  <mat-form-field class="example-full-width">
+                      <textarea #description matInput placeholder="Description"  maxlength="125"></textarea>
+                      <mat-hint align="end">{{description.value.length}} / 125</mat-hint>
+                    </mat-form-field>
+              </div>
+
+                        <!-- <button>upload</button> -->
+
+                        <!-- <mat-form-field class="example-full-width" style="padding: 20px;">
+                          <input matInput placeholder="serves" >
+                        </mat-form-field> -->
+                        <div class="col-auto " >
+
+                        <button class="btn btn--radius btn--green pull-right"  matStepperNext (click)="getsuggestedIngredients(recipeName.value,cusine.value,type.value)" >Next</button>
+
+                        </div>
+                      </form>
+                  </mat-step>
+
+
+          <!-- <mat-form-field>
+            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+          </mat-form-field> -->
+          <!-- <div>
+            <button mat-button matStepperNext class="btn btn--radius btn--green">Next</button>
+          </div> -->
+
+
+        <!--Second Stage of recipe publishing  -->
+
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Add Ingredients</ng-template>
+
+          <div class="container" >
+          <div class="column" >
+          <mat-form-field>
+            <input #serves matInput type="number" min="0"  oninput="validity.valid||(value='');" placeholder="No. of Serves" formControlName="secondCtrl" required>
+
+          </mat-form-field>
+          <!-- <div class="align-right">
+                  <mat-chip-list aria-label="Fish selection">
+                          <mat-chip>One fish</mat-chip>
+                          <mat-chip>Two fish</mat-chip>
+                          <mat-chip color="primary" selected>Primary fish</mat-chip>
+                          <mat-chip color="accent" selected>Accent fish</mat-chip>
+                        </mat-chip-list>
+          </div> -->
+          <!-- Division for adding ingredients -->
+          <div >
+          <mat-form-field class="example-chip-list" >
+                  <mat-chip-list #chipList>
+                    <mat-chip   style="background-color: #c5e1a5"
+                      *ngFor="let ingredient of ingredients"
+                              [selectable]="selectable"
+                              [removable]="removable"
+                              (removed)="remove(ingredient)">
+                              {{ingredient.name}}
+                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input  placeholder="Add Ingredients..."
+                    [formControl]="ingredientCtrl"
+                     #ingredientInput
+                    [matAutocomplete]="auto3"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="add($event)"
+                    (mouseup)="enableOption($event)"
+                  />
+                  </mat-chip-list>
+                  <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient">
+                      {{ ingredient }}
+                    </mat-option>
+                  </mat-autocomplete>
+
+
+<!--                   </mat-chip-list>-->
+                </mat-form-field>
+
+
+              </div>
+          </div>
+          <div class="column2" >
+            <mat-card class="container ingredientsList" style="padding-right: 30px;min-width: 300px;
+  max-width: 150px;">
+              <h5 class="title" style="margin-left:0;">Suggested ingredients </h5>
+              <mat-chip-list >
+                <mat-chip style="background-color: #e3f2fd"
+                  *ngFor="let ingredient of suggestedIngredients"
+                  [selectable]="selectable"
+
+                  (click)="addToform(ingredient)">
+                  {{ingredient}}
+                  <!--      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>-->
+                </mat-chip>
+              </mat-chip-list>
+            </mat-card>
+
+          </div>
+        </div>
+              <!-- Ingredients addition finished -->
+
+              <!-- Add ingredients quantity  // table creation-->
+              <div style="overflow-x:auto; padding-left: 50px" *ngIf="ingredients.length">
+               <table   style="font-size:15px ">
+                <tr>
+                  <td width=300px><strong>Ingredient Name</strong></td>
+                  <td style="padding-left: 10px;  width: 30%"><strong>Quantity</strong></td>
+                  <td style="padding-left: 120px; width: 30% "><strong>Unit</strong></td>
+                </tr>
+               </table>
+              <table  *ngFor="let ingredient of ingredients" style="font-size:15px ">
+
+                  <tr>
+                       <td style=" width: 30% ;">{{ingredient.name}}</td>
+                       <!-- <td style="padding-left: 20px;"><input #name style="width: 40px; border: 2px solid red;" placeholder={{ingredient.name}}></td> -->
+                       <td style=" width: 25% ;"><input  #measurement type="number"  min="0"  oninput="validity.valid||(value='');" class="form-control"  placeholder={{ingredient.quantity}} style=" min-width: 40px;"></td>
+                       <td style="padding-left: 40px; width: 30% ;"><!-- <input  style="width: 40px; border: 2px solid red;" placeholder={{ingredient.unit}}> -->
+                        <mat-form-field style="padding-left: 20px;padding-right: 20px;">
+                           <mat-label >Unit</mat-label>
+                            <select #unit matNativeControl required (change)="addIngredient(measurement.value,unit.value);">
+                              <option value="">select unit</option>
+                              <option value="tbs">tbs</option>
+                              <option value="bowl">bowl</option>
+                              <option value="gms">gms</option>
+                              <option value="kgs">kgs</option>
+                            </select>
+                          </mat-form-field>
+                      </td>
+
+                   </tr>
+
+
+
+              </table>
+              </div>
+
+
+          <div class="col-auto">
+
+            <button  matStepperNext class="btn btn--radius btn--green pull-right" style="padding: 10px; margin: 10px;">Next</button>
+            <button  matStepperPrevious class="btn btn--radius btn--green pull-right" style="padding: 10px; margin: 10px;">Back</button>
+          </div>
+        </form>
+      </mat-step>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- Section to write recipe procedure -->
+
+      <mat-step>
+        <ng-template matStepLabel>Recipe Procedure</ng-template>
+
+          <div style="padding: 3px; background: #CB202D;">
+
+
+
+          <mat-horizontal-stepper [linear]="isLinear" #stepper >
+
+
+            <mat-step [stepControl]="firstFormGroup" *ngFor="let stage of stages" >
+
+                <span *ngIf='stage.stagevalue'>
+
+                    <div class="alert alert-success animi" role="alert">
+                        We have saved this stage
+
+                        <button *ngIf='stage.id==stages.length-1' type="button"  matTooltip="Stage is a part of recipe " [matTooltipPosition]="positionOptions" style="background: #CB202D;border: none;border-radius: 0" class="btn-outline" (click)="createstage()" class="btn btn-secondary">Add Stage</button>
+                        <button *ngIf='stage.id!=stages.length-1' matStepperNext  type="button"  matTooltip="Stage is a part of recipe " [matTooltipPosition]="positionOptions" style="background: #CB202D;border: none;border-radius: 0" class="btn-outline" class="btn btn-secondary">Next</button>
+                    </div>
+
+
+                   </span>
+
+                   <span *ngIf='!stage.stagevalue'>
+
+
+
+
+
+
+
+              <form [formGroup]="firstFormGroup" >
+
+                <ng-template matStepLabel>New Stage</ng-template>
+
+
+                <div class="row" >
+                    <div class="col-sm-4" >
+
+                        <div class="container" style="padding: 10px;">
+                          <div class="crop">
+                              <img *ngIf=stageimageview src="{{urll}}" alt="recipe image" class="image" style="width:100%;opacity: 0.5;">
+                              <img *ngIf=!stageimageview src="{{urll}}" alt="recipe image" class="image" style="width:100%;opacity: 1;">
+                          </div>
+
+                            <div  *ngIf=stageimageview class="middle">
+
+                              <div>
+                                  <button style="padding: 20px;">
+                                      <app-file-upload (complete)="onFileComplete($event)"  required ></app-file-upload>
+                                  </button>
+                              </div>
+                            </div>
+                          </div>
+
+                    </div>
+                    <div class="col-sm-8">
+
+                        <mat-form-field >
+                            <input matInput #stagename placeholder="Stage Name" value="" formControlName="firstCtrl" required>
+                          </mat-form-field>
+
+
+                      <div class="row"   >
+                          <div class="col-sm-3">
+                              <mat-form-field>
+
+
+                              <input type="number" matInput #duration value="" placeholder="Duration(min)" formControlName="firstCtrl" required>
+
+                            </mat-form-field>
+                                </div>
+
+                        <div class="col-sm-9" style="text-align: right;" align="right">
+
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <div align="right" style="margin-right: 45px" >
+
+                                        <button type="button" matTooltip="Steps are instructions to perform a stage." [matTooltipPosition]="positionOptions" style="background: #d93038;border: none;border-radius: 0;" (click)="createstep(stage)" class="btn btn-secondary">Add steps</button> &nbsp;
+                                        <button type="button"  matTooltip="Save before proceeding further" [matTooltipPosition]="positionOptions" style="background: #dd464d; border: none;border-radius: 0" (click)="save(stagename.value,duration.value,stage)" class="btn btn-secondary">Save and Continue</button>
+                                    </div>
+
+                                  </div>
+
+
+                        </div>
+
+
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+              </form>
+
+
+
+             <ol style="padding: 14px;" >
+                <li *ngFor="let step of stage.steps ; let p=index" >
+
+                <mat-form-field class="example-full-width">
+                    <input [(ngModel)]=newarr[p] type="text" matInput #Search placeholder="Step Content"  required>
+                </mat-form-field>
+
+              </li>
+
+                  <!-- <li style="width: 50%;" *ngFor="let step of stage.steps ; let p=index" ><input  [(ngModel)]=newarr[p] type="text" style="border-radius: 50px;padding: 10px;" #Search class="control" placeholder="Step Content" required id="serachvalue" ></li>
+                  <input [(ngModel)]=newarr[p] placeholder="Step Content" required > -->
+
+
+             </ol>
+
+
+
+
+
+            </span>
+
+
+
+
+
+            </mat-step>
+
+
+
+          </mat-horizontal-stepper>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           <!-- <h3>Give Procedure for recipe</h3> -->
+
+           <!--BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN -->
+           <!-- <ul>
+                <li *ngIf="n==1 || n==2 || n==3 || n==4 || n==5 ">
+
+                  <input #stageDesc matInput placeholder="stage Description">
+                  <input #duration matInput placeholder="Duration">
+                  <app-file-upload (complete)="onFileComplete($event)" ></app-file-upload>
+                  <img src="{{urll}}"/>
+
+
+                  <ul *ngIf="n==1 || n==2 || n==3 || n==4 || n==5 ">
+                  <li  *ngFor="let link of links">
+                    {{link}}<br>
+
+                    <mat-form-field class="example-full-width" >
+                          <textarea #step matInput ></textarea>
+
+                    </mat-form-field>
+                       <br/>
+
+
+
+
+
+
+
+                    <button  type="button" class="btn btn-warning" (click)="addLink();addProcess(step.value)" style="margin:20px;" >
+                      <mat-icon style="padding-top: 5px;">add</mat-icon>
+                    </button>
+
+                    <button (click)="addProcess(step.value)" class="btn btn--radius btn--green">Finish adding steps</button>
+
+
+
+                </li>
+
+                </ul>
+
+                <button (click)="addStages(stageDesc.value,duration.value);adda();" class="btn btn--radius btn--green"> <a *ngIf="a>0"> Stage Confirmed</a> <a *ngIf="a==0">  Confirm the Stage</a></button>
+              </li>
+              </ul>
+
+              <br/>
+              <ul>
+              <li *ngIf=" n==2 || n==3 || n==4 || n==5 ">
+
+                <input #stageDesc1 matInput placeholder="stage Description">
+                <input #duration1 matInput placeholder="Duration">
+                <app-file-upload (complete)="onFileComplete($event)" ></app-file-upload>
+                <img src="{{urll1}}"/>
+
+                <ul *ngIf=" n==2 || n==3 || n==4 || n==5 ">
+                <li  *ngFor="let link of links1">
+                  {{link}}<br>
+
+                  <mat-form-field class="example-full-width" >
+                        <textarea #step1 matInput ></textarea>
+
+                  </mat-form-field>
+                     <br/>
+
+
+
+
+
+
+
+                  <button  type="button" class="btn btn-warning" (click)="addLink1();addProcess1(step1.value)" style="margin:20px;" >
+                    <mat-icon style="padding-top: 5px;">add</mat-icon>
+                  </button>
+
+                  <button (click)="addProcess1(step1.value)" class="btn btn--radius btn--green">Finish adding steps</button>
+
+
+                <button (click)="addStages1(stageDesc1.value,duration1.value);adda1();addProcess1(step1.value)" class="btn btn--radius btn--green"> <a *ngIf="a>0"> Stage Confirmed</a> <a *ngIf="a==0">  Confirm the Stage</a></button>
+              </li>
+
+              </ul>
+              <button (click)="addStages1(stageDesc1.value,duration1.value);adda1();" class="btn btn--radius btn--green"> <a *ngIf="a>0"> Stage Confirmed</a> <a *ngIf="a==0">  Confirm the Stage</a></button>
+
+            </li>
+          </ul>
+
+            <br/>
+            <ul>
+            <li *ngIf=" n==3 || n==4 || n==5 ">
+
+              <input #stageDesc2 matInput placeholder="stage Description">
+              <input #duration2 matInput placeholder="Duration">
+              <app-file-upload (complete)="onFileComplete($event)" ></app-file-upload>
+              <img src="{{urll2}}"/>
+
+              <ul *ngIf=" n==3 || n==4 || n==5 ">
+              <li  *ngFor="let link of links2">
+                {{link}}<br>
+
+                <mat-form-field class="example-full-width" >
+                      <textarea #step2 matInput ></textarea>
+
+                </mat-form-field>
+                   <br/>
+
+
+
+
+
+
+
+                <button  type="button" class="btn btn-warning" (click)="addLink2();addProcess2(step2.value)" style="margin:20px;" >
+                  <mat-icon style="padding-top: 5px;">add</mat-icon>
+                </button>
+                <button (click)="addProcess2(step2.value)" class="btn btn--radius btn--green">Finish adding steps</button>
+
+              </li>
+            </ul>
+
+
+              <button (click)="addStages2(stageDesc2.value,duration2.value);adda2();" class="btn btn--radius btn--green"> <a *ngIf="a>0"> Stage Confirmed</a> <a *ngIf="a==0">  Confirm the Stage</a></button>
+            </li>
+
+            </ul>
+
+          <br/>
+          <ul>
+          <li *ngIf=" n==4 || n==5 ">
+
+            <input #stageDesc3 matInput placeholder="stage Description">
+            <input #duration3 matInput placeholder="Duration">
+            <app-file-upload (complete)="onFileComplete($event)" ></app-file-upload>
+            <img src="{{urll3}}"/>
+
+            <ul *ngIf=" n==4 || n==5 ">
+            <li  *ngFor="let link of links3">
+              {{link}}<br>
+
+              <mat-form-field class="example-full-width" >
+                    <textarea #step3 matInput ></textarea>
+
+              </mat-form-field>
+                 <br/>
+
+
+
+
+
+
+
+              <button  type="button" class="btn btn-warning" (click)="addLink3();addProcess3(step3.value)" style="margin:20px;" >
+                <mat-icon style="padding-top: 5px;">add</mat-icon>
+              </button>
+              <button (click)="addProcess3(step3.value)" class="btn btn--radius btn--green">Finish adding steps</button>
+
+            </li>
+          </ul>
+
+            <button (click)="addStages3(stageDesc3.value,duration3.value);adda3();" class="btn btn--radius btn--green"> <a *ngIf="a>0"> Stage Confirmed</a> <a *ngIf="a==0">  Confirm the Stage</a></button>
+          </li>
+
+          </ul>
+
+        <br/>
+        <ul>
+        <li *ngIf=" n==5 ">
+
+          <input #stageDesc4 matInput placeholder="stage Description">
+          <input #duration4 matInput placeholder="Duration">
+          <app-file-upload (complete)="onFileComplete($event)" ></app-file-upload>
+          <img src="{{urll4}}"/>
+
+          <ul *ngIf=" n==5 ">
+          <li  *ngFor="let link of links4">
+            {{link}}<br>
+
+            <mat-form-field class="example-full-width" >
+                  <textarea #step4 matInput ></textarea>
+
+            </mat-form-field>
+               <br/>
+
+
+
+
+
+
+
+            <button  type="button" class="btn btn-warning" (click)="addLink4();addProcess4(step4.value)" style="margin:20px;" >
+              <mat-icon style="padding-top: 5px;">add</mat-icon>
+            </button>
+            <button (click)="addProcess4(step4.value)" class="btn btn--radius btn--green">Finish adding steps</button>
+
+          </li>
+        </ul>
+
+          <button (click)="addStages4(stageDesc4.value,duration4.value);adda4();" class="btn btn--radius btn--green"> <a *ngIf="a>0"> Stage Confirmed</a> <a *ngIf="a==0">  Confirm the Stage</a></button>
+        </li>
+
+        </ul> -->
+        <!--BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN BARUN -->
+
+      <br/>
+<!--
+              <li *ngIf=" n==2 || n==3 || n==4 || n==5  ">
+
+                  <input #stageDesc1 matInput placeholder="Stage Description">
+                  <input #duration1 matInput placeholder="Duration">
+                  <app-file-upload (complete)="onFileComplete1($event)" ></app-file-upload>
+
+                <ul>
+                <li  *ngFor="let link of links1">
+                  {{link}}
+                  <mat-form-field class="example-full-width">
+                    <textarea #step1 matInput ></textarea>
+                  </mat-form-field>
+
+                     <br/>
+
+         <button  type="button" class="btn btn-warning" (click)="addLink1();addProcess1(step1.value)" style="margin:20px;" >
+                  <mat-icon style="padding-top: 5px;">add</mat-icon>
+              </button>
+
+
+
+
+              <button (click)="addStages1(stageDesc1.value,duration1.value);adda1();addProcess1(step1.value)" class="btn btn--radius btn--green"><a *ngIf="a1>0"> Stage Confirmed</a> <a *ngIf="a1==0">  Confirm the Stage</a></button>
+
+
+
+            <br/>
+            </ul>
+
+
+
+
+            <a *ngIf="n==3 || n==4 || n==5  ">
+
+                <input #stageDesc2 matInput placeholder="stage Description">
+                <input #duration2 matInput placeholder="Duration">
+                <app-file-upload (complete)="onFileComplete2($event)" ></app-file-upload>
+
+
+              <a  *ngFor="let link of links2">
+                {{link}}</a>
+                  <mat-form-field class="example-full-width">
+                      <textarea #step2 matInput ></textarea>
+                    </mat-form-field>
+                   <br/>
+       <button  type="button" class="btn btn-warning" (click)="addLink2();addProcess2(step2.value)" style="margin:20px;" >
+               <mat-icon style="padding-top: 5px;">add</mat-icon>
+            </button>
+
+            <button (click)="addStages2(stageDesc2.value,duration2.value);adda2();addProcess2(step2.value)" class="btn btn--radius btn--green"><a *ngIf="a2>0"> Stage Confirmed</a> <a *ngIf="a2==0">  Confirm the Stage</a></button>
+
+          </a>
+
+          <br/>
+
+
+
+
+          <a *ngIf=" n==4 || n==5  ">
+
+              <input #stageDesc3 matInput placeholder="stage Description">
+              <input #duration3 matInput placeholder="Duration">
+              <app-file-upload (complete)="onFileComplete3($event)" ></app-file-upload>
+
+
+            <a  *ngFor="let link of links3">
+              {{link}}</a>
+                <mat-form-field class="example-full-width">
+                    <textarea #step3 matInput ></textarea>
+                  </mat-form-field>
+                 <br/>
+     <button  type="button" class="btn btn-warning" (click)="addLink3();addProcess3(step3.value)" style="margin:20px;" >
+              <mat-icon style="padding-top: 5px;">add</mat-icon>
+          </button>
+
+          <button (click)="addStages3(stageDesc3.value,duration3.value);adda3();addProcess3(step3.value)" class="btn btn--radius btn--green"><a *ngIf="a3>0"> Stage Confirmed</a> <a *ngIf="a3==0">  Confirm the Stage</a></button>
+
+        </a>
+
+        <br/>
+
+
+
+
+        <a *ngIf=" n==5  ">
+
+            <input #stageDesc4 matInput placeholder="stage Description">
+            <input #duration4 matInput placeholder="Duration">
+            <app-file-upload (complete)="onFileComplete4($event)" ></app-file-upload>
+
+
+          <a  *ngFor="let link of links4">
+            {{link}}</a>
+              <mat-form-field class="example-full-width">
+                  <textarea #step4 matInput ></textarea>
+                    <br>
+                </mat-form-field>
+               <br/>
+   <button  type="button" class="btn btn-warning" (click)="addLink4();addProcess4(step4.value)" style="margin:20px;" >
+            <mat-icon style="padding-top: 5px;">add</mat-icon>
+        </button>
+
+
+        <button (click)="addStages4(stageDesc4.value,duration4.value);adda4();addProcess4(step4.value)" class="btn btn--radius btn--green"><a *ngIf="a4>0"> Stage Confirmed</a> <a *ngIf="a4==0">  Confirm the Stage</a></button>
+
+
+      </a> -->
+
+
+
+
+<!--
+                 <br/> <button type="submit" (click)="addn();">Add Stage</button> -->
+
+
+        <div class="col-auto">
+          <span>*make sure you save your stages before submitting</span>
+          <button  (click)="publishRecipe(recipeName.value, description.value,cusine.value,type.value,serves.value)" class="btn btn--radius btn--green pull-right"   style="padding: 10px; margin: 10px;" [routerLink]="['/dashboard']"  >Submit</button>
+          <!-- <button  (click)="stepper.reset()" class="btn btn--radius btn--green pull-right" style="padding: 10px; margin: 10px;">Reset</button> -->
+          <button  matStepperPrevious class="btn btn--radius btn--green pull-right" style="padding: 10px;margin: 10px;">Back</button>
+
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+
+
+  </div>
+</div>
+</body>
+

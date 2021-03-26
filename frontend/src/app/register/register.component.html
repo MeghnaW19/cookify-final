@@ -1,0 +1,136 @@
+<app-navbar></app-navbar>
+<div class="page-wrapper bg-red p-t-70 p-b-100 font-robo">
+        <div class="wrapper wrapper--w960">
+            <div class="card card-2">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <h3 class="title">Register with cookify</h3>
+
+                    <div class="row">
+                        <div class="col-5">
+                            <mat-form-field class="example-full-width">
+                                <input #name title="Name can only contain alphabets and whitespaces" matInput placeholder="Name" name="name" [formControl]="nameFormControl"
+                                        [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="nameFormControl.hasError('required')">
+                                    Name is <strong>required</strong>
+                                </mat-error>
+                                <mat-error *ngIf="nameFormControl.hasError('pattern')">
+                                    Name pattern is <strong>invalid</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5">
+                            <mat-form-field class="example-full-width">
+                                <input #email matInput placeholder="Email" [formControl]="emailFormControl"
+                                        [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="emailFormControl.hasError('pattern') && !emailFormControl.hasError('required')">
+                                    Please enter a valid email address
+                                </mat-error>
+                                <mat-error *ngIf="emailFormControl.hasError('required')">
+                                    Email is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-5">
+                            <mat-form-field class="example-full-width">
+                                <input #username title="Username can only contain alphanumerics and non-repititive hyphen" matInput placeholder="Username" name="userName" [formControl]="userNameFormControl"
+                                        [errorStateMatcher]="matcher" maxlength="12">
+                                <mat-error *ngIf="userNameFormControl.hasError('required')">
+                                    Username is <strong>required</strong>
+                                </mat-error>
+                                <mat-error *ngIf="userNameFormControl.hasError('pattern')">
+                                    Username is<strong>invalid</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5">
+                            <mat-form-field class="example-full-width">
+                                <input type="password" title="Include atleast one uppercase,one lowercase,one digit,and one special character and should be atleast 8 characters long" #password matInput placeholder="Password" name="password" [formControl]="passwordFormControl"
+                                        [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                                    Password is <strong>required.</strong>
+                                </mat-error>
+                                <mat-error *ngIf="passwordFormControl.hasError('pattern')">
+                                    Password is <strong>invalid.</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <mat-form-field class="example-full-width">
+                                <input #city matInput placeholder="City" name="city" [formControl]="cityFormControl"
+                                        [errorStateMatcher]="matcher">
+                                <mat-error *ngIf="cityFormControl.hasError('required')">
+                                    City is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-5" style="z-index: 9999;">
+
+                                <mat-form-field style="z-index: 9999;">
+                                        <input matInput #age [matDatepicker]="picker" placeholder="DOB">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                               
+
+                            <!-- <mat-form-field class="example-full-width">
+                                <input #age matInput placeholder="Age" name="age" [formControl]="ageFormControl"
+                                        [errorStateMatcher]="matcher" >
+                                <mat-error *ngIf="ageFormControl.hasError('required')">
+                                    Age is <strong>required</strong>
+                                </mat-error>
+                                <mat-error *ngIf="ageFormControl.hasError('pattern')">
+                                        Age can only be<strong> a number</strong>
+                                </mat-error>
+                            </mat-form-field> -->
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                                <mat-form-field class="example-full-width">
+                                    <input #st matInput type="text" placeholder="State" name="state"  (mouseup)="getStateAndCountry($event,city.value)" value={{state}}  [formControl]="myControl1" [matAutocomplete]="auto">
+                                  <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option1 of filteredOptions1 | async" [value]="option1">
+                                      {{option1}}
+                                    </mat-option>
+                                  </mat-autocomplete>
+                                </mat-form-field>
+                        </div>
+                        <div class="col-5">
+                            <mat-form-field class="example-full-width">
+                                <input #ct matInput type="text" placeholder="Country" name="country" value={{country}}>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <form class="row-space" [formGroup]="genderControl">
+                        <div>
+                            <label for="gender">Gender</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="inlineRadio1"  value="male" >Male
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input  formControlName="gender" class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="female">Female
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input  formControlName="gender" class="form-check-input" type="radio" name="gender" id="inlineRadio3" value="other">Other
+                            </label>
+                        </div>
+                    </form>
+                    <button class="btn btn--radius btn--green" type="submit" [disabled]="nameFormControl.hasError('required') || nameFormControl.hasError('pattern') || emailFormControl.hasError('required')|| emailFormControl.hasError('pattern') || userNameFormControl.hasError('required') || userNameFormControl.hasError('pattern')|| passwordFormControl.hasError('required')|| passwordFormControl.hasError('pattern')" (click)="registerUser(name.value, st.value, email.value,username.value,password.value,city.value,age.value,genderControl.value,ct.value)">Register</button>
+
+                </div>
+            </div>
+        </div>
+    </div>

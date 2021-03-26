@@ -1,0 +1,130 @@
+<app-loggednavbar [name]="name" [guestuser]="guestuser"></app-loggednavbar>
+<div class="container" style="padding-top: 100px" >
+  <div class="row">
+    <div class="col-sm-4 crop">
+
+          <img mat-card-image src="{{recipedetail?.recipeImage}}" alt="Photo of a Shiba Inu">
+
+    </div>
+    <div class="col-sm-8 abcd">
+      <mat-card class="recipeDetail">
+        <mat-card-title> {{recipedetail?.recipeName}}</mat-card-title>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-sm-3" style=" color: #78C257;text-align: left">
+              <strong>Recipe By: {{recipedetail?.publishedBy}}</strong>
+            </div>
+            <div class="col-sm-3" style="color: #78C257;text-align:left">
+              <span class="lnr lnr-star" ></span><b> {{recipedetail?.rating | number:'.1-2'}}</b>
+              </div>
+            <div class="col-sm-3" style=" color: #78C257;text-align: left">
+              <strong>Tried By: {{viewcount}}</strong>
+            </div>
+            <div class="col-sm-3" style="color: #78C257;text-align: left">
+              <strong>Duration:{{recipedetail?.cookingTime}} mins</strong>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-subtitle></mat-card-subtitle>
+        <mat-card-subtitle></mat-card-subtitle>
+
+        <mat-card-content style="margin: auto">
+          <p >
+            {{recipedetail?.description}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-raised-button class="favButton" style="color:#eb4653" (click)="like()">Add To Favourites</button>
+          <button mat-raised-button class="favButton" style="color:#eb4653" (click)="navtopage(1)">Try the Recipe</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" style="margin-top: 10px;">
+  <div clas="row">
+    <div class="col-sm-3">
+      <div style="margin-left:95px; margin-bottom:10px ;" >
+        <button type="button" (click)="navtopage(0)" class="btn btn-success movemove" style="text-align: center; padding-left: 10px;">Order Ingredients</button>
+      </div>
+      <mat-card class="example-card" >
+        <mat-card-title style="text-align: center;background:#434345;color: white">Ingredients
+        </mat-card-title>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-sm-12" *ngFor="let view of ingredients" >
+                <mat-card style="margin-bottom: 5px;">
+                  <mat-card-content>
+                    <p class="card-text" style="text-align: center;color:#eb1e2c" >{{view.ingredients|titlecase}}  </p>
+                    <p  style="text-align: center" *ngIf="view.regional"><em style="font-size: 13px;">{{"Also known as "+ view.regional}}</em></p>
+                  </mat-card-content>
+                </mat-card>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-sm-9">
+      <mat-card class="example-card" >
+        <mat-card-title style="text-align:center;background:#434345;color: white">Procedure
+        </mat-card-title>
+        <mat-card-content>
+          <div class="row" >
+            <div class="col-sm-12"   >
+              <mat-card  >
+                <div *ngFor="let view of recipedetail?.procedure.stages;let i=index" style="margin-bottom: 0px;">
+                  <mat-card-subtitle>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <p  style="color:#eb4653;text-align: left"> Stage {{i+1}}-<strong>{{view.stageName |titlecase}} </strong> </p>
+                      </div>
+                      <div class="col-sm-6">
+                        <p  style="color: #78C257;text-align:left"><strong>Duration:</strong>{{view.duration}} min  </p>
+                      </div>
+                    </div>
+                  </mat-card-subtitle>
+                  <ol>
+                    <mat-card-content *ngFor="let cc of view.steps" style="text-align:left;margin-left: 50px">
+                    <li>{{cc.stepContent}}</li>
+                    </mat-card-content>
+                  </ol>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" style="margin-top: 10px;">
+  <div class="row">
+    <div class="col-sm-12">
+      <div >
+        <div style="background: #434345">
+          <div style="color: antiquewhite;padding-top: 10px;padding-bottom: 10px;padding-left: 5px;">
+            Comments    :   {{viewcomments.length}}
+          </div>
+        </div>
+
+        <mat-card style="margin-top: 15px;">
+          <div *ngFor="let view of viewcomments" >
+            <mat-card-header >
+              <div mat-card-avatar style="background-image: url(https://iisy.fi/wp-content/uploads/2018/08/user-profile-male-logo.jpg);background-size: cover;"></div>
+              <mat-card-title style="color: #eb4653;font-size: 15px;">{{view?.username | titlecase}}</mat-card-title>
+              <mat-card-subtitle style="color: #78C257">{{view?.comment}}</mat-card-subtitle>
+            </mat-card-header>
+            
+          </div>
+          <mat-card-header *ngIf="displaycomment" style="color: #eb4653">
+            No Comments 
+         </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

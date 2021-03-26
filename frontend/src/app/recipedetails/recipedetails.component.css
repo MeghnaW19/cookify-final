@@ -1,0 +1,54 @@
+.abcd{
+    animation: abcd 1s  ease-in-out alternate-reverse;
+}
+@keyframes abcd{
+    0%{
+        transform: translateY(0px);
+    }
+    100%{
+        transform: translateY(20px);
+    }
+}
+
+.movemove{
+    animation: movemove 1s  infinite ease-in-out alternate-reverse;
+}
+
+@keyframes movemove{
+    0%{
+        transform: translateX(17px);
+    }
+    100%{
+        transform: translateX(-17px);
+    }
+}
+
+.crop{
+    position: relative;
+    width: 280px;
+    height: 200px;
+    overflow: hidden;/*reset margin of figure tag*/
+  }
+  .crop img{
+    border-radius: 2px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+  }
+
+  .favButton{
+    width: 20rem;
+    /*box-shadow: 10px 10px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);*/
+
+    background-color: #f5f5f5;
+  }
+
+  .recipeDetail{
+    box-shadow: 3px 10px 10px 1px rgba(0, 0, 0, 0.05), 0 3px 14px 2px rgba(0, 0, 0, 0.05), 0 5px 5px -3px rgba(0, 0, 0, 0.04);
+
+  }

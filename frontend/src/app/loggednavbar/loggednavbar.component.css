@@ -1,0 +1,31 @@
+.mainmenu-area{
+    background: rgb(203, 32, 45);
+    background: -webkit-linear-gradient(45deg, rgba(203, 32, 45, 1) 0%, rgba(212, 70, 81, 1) 100%);
+    background: -o-linear-gradient(45deg, rgba(203, 32, 45, 1) 0%, rgba(212, 70, 81, 1) 100%);
+    background: linear-gradient(45deg, rgba(203, 32, 45, 1) 0%, rgba(212, 70, 81, 1) 100%);
+}
+
+.right-button{
+    font-size: 96px;
+}
+
+.onhoverwelcome:hover{
+    text-decoration: none;
+}
+
+.searching{
+    transform: 5s scale(1) 
+}
+
+.searching:hover{
+    transform: scale(0.9)
+}
+
+@media screen and (max-width: 600px) {
+.abcd{
+    margin: auto;
+    margin-bottom: 5px;
+    
+}
+}
+

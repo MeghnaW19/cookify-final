@@ -1,0 +1,54 @@
+<div style="margin-bottom: 80px;">
+  <app-loggednavbar [name]=""></app-loggednavbar>
+  </div>
+
+<div  class="container" style="margin-top: 50px;">
+  <div class="row">
+    <div class="col-sm-4" *ngFor="let view of searchResult  ">
+      <div style="max-width: 350px;min-width: 300px;">
+        <div (click)="tr(view.id)" class="team-boxrec">
+          <div>
+            <img src="{{view.recipeImage}}" style="width: 100%" alt="">
+          </div>
+          <div>
+            <strong><h4>{{view.recipeName}}</h4></strong>
+          </div>
+          <div class="row" >
+            <div class="col-sm-4" style=" color: #78C257">
+              <strong>{{view.cuisine}}</strong>
+            </div>
+            <div class="col-sm-4" style="text-align: center">
+              <span class="lnr lnr-star" ></span><b> {{view.rating|number:'.1-2'}}</b>
+            </div>
+            <div class="col-sm-4" style="text-align: end;color: #78C257">
+              <strong>{{view.cookingTime}} mins</strong>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6" style="text-align: left">
+              <strong>Serves: {{view.servesFor}}</strong>
+            </div>
+            <div class="col-sm-6" style="text-align: end">
+              <b class="position" style="font-size: 14px;">{{view.publishedBy}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="searchResult==null" style="padding:30%;margin-top: -30%;">
+  <img src="../../assets/homecomponentassets/images/nodata.jpg" />
+    <!-- <p style="padding: 50px; padding-left: 200px; font-size: 20px;">No results found</p> -->
+</div>
+
+<div *ngIf="searchResult==null" style="margin-top:320px;">
+  <app-footer></app-footer>
+
+</div>
+
+<div *ngIf="searchResult!=null" style="margin-top:240px;">
+  <app-footer></app-footer>
+
+</div>

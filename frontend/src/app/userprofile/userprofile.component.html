@@ -1,0 +1,176 @@
+<app-loggednavbar [name]="name"></app-loggednavbar>
+<div class="p-t-70" style="background-color: #EB4653;" >
+    <mat-card class="container" style="margin-bottom: -30px; margin-top: 20vh; box-shadow: 10px 10px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
+
+        <div class="addr2 row"  style="margin-top: -22vh;">
+          <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <mat-card class="container2 " >
+                  <img class="image" src="{{user?.image}}"  alt="Profile image"   *ngIf="upload; else elseblock;"  >
+                  <ng-template #elseblock>
+                    <img class="image" src="{{user?.image}}"  alt="Profile image"   style="opacity: 0.4;" >
+                  </ng-template>
+                <ng-template *ngIf="upload;then done;else uploadBlock;"></ng-template>
+                 <ng-template #done>
+                  <div class="middle">
+                    <app-file-upload (complete)="onFileComplete($event)"></app-file-upload>
+                  </div></ng-template>
+                   <ng-template #uploadBlock>
+                     <div  class="middle2">
+                  <button mat-button (click)="approve()">
+                    <mat-icon>done</mat-icon>
+                  </button>
+                     </div>
+                   </ng-template>
+                </mat-card>
+              </div>
+        <div class="col-md-4">
+                    <mat-card class="nameField"   style="margin-top: 70px;margin-left: 0px;width: 95%;" >
+
+                      <h1 ><b><span>{{user?.name}}</span></b></h1>
+                      <mat-card-subtitle><b>Username: </b>{{user?.username }}</mat-card-subtitle>
+                      <mat-card-subtitle><b>Email: </b>{{user?.emailId }}</mat-card-subtitle>
+                      <!--                   <mat-card-subtitle><a href="#">Edit your Profile</a></mat-card-subtitle>-->
+               </mat-card>
+        </div>
+          <div class="col-md-1"></div>
+<!--            </div>-->
+
+        </div>
+
+
+      <div class="addr">
+         <button mat-button (click)="scroll(publish)" class="buttons">
+<!--           <mat-card class="example-card">-->
+           <p class="numbertext">{{numberOfPublished}}</p>
+           PUBLISHED
+         </button>
+        <button mat-button (click)="scroll(like)"  class="buttons">
+          <p class="numbertext">{{numberOfLiked}}</p>
+          LIKED
+        </button>
+        <button mat-button (click)="scroll(cook)"  class="buttons">
+          <p class="numbertext">{{numberOfTried}}</p>
+          COOKED
+        </button>
+      </div>
+        <div class="row" #publish>
+                <div class="col-sm-12 col-xs-12 p-t-40">
+                    <div class="page-title text-center">
+                        <h5 class="title">Recipes you have published</h5>
+                    </div>
+                </div>
+        </div>
+            <div style="margin-top: -35px;"
+                ng2-carouselamos
+                [width]="1000"
+                [items]=recipespublished
+                [$item]="itemTemplate"
+                [$prev]="prevTemplate"
+                [$next]="nextTemplate" >
+            </div>
+            <div class="row m-t-10">
+                <div class="col-xs-12">
+                    <div class="team-slide">
+                        <ng-template #prevTemplate>
+                            <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+                                <div class="box-icon">
+                                    <i class="lnr lnr-chevron-left"></i>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-item let-i="index" #itemTemplate >
+                            <app-recipecard style="background-color: white;" [id]="item?.recipeId" [recipe_name]="item?.recipeName" [image_path]="item?.recipeImage" [cusine_name]="item?.cuisine" [serve]="item.serves" [duration]="item.cookingTime" [published_on]="item.publishedOn" [master_name]="item.publishedby" [rating_value]="item.rating" ></app-recipecard>
+                        </ng-template>
+                        <ng-template #nextTemplate>
+                            <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+                                <div class="box-icon">
+                                    <i class="lnr lnr-chevron-right"></i>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="row" #like>
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="page-title text-center">
+                            <h5 class="title">Recipes you have liked</h5>
+                        </div>
+                    </div>
+            </div>
+                <div style="margin-top: -35px;"
+                    ng2-carouselamos
+                    [width]="1000"
+                    [items]=recipesliked
+                    (onSelectedItem)="tr($event.item.id)"
+                    [$item]="itemTemplate"
+                    [$prev]="prevTemplate"
+                    [$next]="nextTemplate" >
+                </div>
+                <div class="row m-t-30">
+                    <div class="col-xs-12">
+                        <div class="team-slide">
+                            <ng-template #prevTemplate>
+                                <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+                                    <div class="box-icon">
+                                        <i class="lnr lnr-chevron-left"></i>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-item let-i="index" #itemTemplate >
+                                <app-recipecard style="background-color: white;" [id]="item?.recipeId" [recipe_name]="item?.recipeName" [image_path]="item?.recipeImage" [cusine_name]="item?.cuisine" [serve]="item.serves" [duration]="item.cookingTime" [published_on]="item.publishedOn" [master_name]="item.publishedby" [rating_value]="item.rating" ></app-recipecard>
+                            </ng-template>
+                            <ng-template #nextTemplate>
+                                <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+                                    <div class="box-icon">
+                                        <i class="lnr lnr-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+             <div class="row" #cook>
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="page-title text-center">
+                            <h5 class="title">Recipes you have tried</h5>
+                        </div>
+                </div>
+             </div>
+                    <div style="margin-top: -35px;"
+                        ng2-carouselamos
+                        [width]="1000"
+                        [items]=recipestried
+                        (onSelectedItem)="tr($event.item.id)"
+                        [$item]="itemTemplate"
+                        [$prev]="prevTemplate"
+                        [$next]="nextTemplate" >
+                    </div>
+                    <div class="row m-t-30">
+                        <div class="col-xs-12">
+                            <div class="team-slide">
+                                <ng-template #prevTemplate>
+                                    <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="box-icon">
+                                            <i class="lnr lnr-chevron-left"></i>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item let-i="index" #itemTemplate >
+                                        <app-recipecard style="background-color: white;" [id]="item?.id" [recipe_name]="item?.recipeName" [image_path]="item?.recipeImage" [cusine_name]="item?.cuisine" [serve]="item?.servesFor" [duration]="item?.cookingTime" [published_on]="item?.publishedOn" [master_name]="item?.publishedby" [rating_value]="item.rating" ></app-recipecard>
+                                </ng-template>
+                                <ng-template #nextTemplate>
+                                    <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+                                        <div class="box-icon">
+                                            <i class="lnr lnr-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+
+        </mat-card>
+    </div>
+    <app-footer></app-footer>

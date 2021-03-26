@@ -1,0 +1,94 @@
+@media screen and (min-width: 480px) {
+  .abcd{
+  left:70%;
+  }
+}
+
+.abcd{
+  left:80%;
+
+}
+
+.publishicon{
+  animation: publish 1s infinite ease-in-out alternate-reverse;
+}
+@keyframes publish{
+  0%{
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(20px);
+  }
+}
+
+.badge {
+  padding: 1px 9px 2px;
+  font-size: 12.025px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #999999;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.badge:hover {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.badge-error {
+  background-color: #CB202D;
+}
+
+.example-box {
+  color: rgba(0, 0, 0, 0.87);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  position: relative;
+  z-index: 9999;
+  margin-left: 90%;
+  margin-top: 20%;
+}
+
+.glow{
+  margin-top: 10px;
+  animation: glowing 1s infinite ease-in-out;
+}
+
+@keyframes glowing
+{
+  0%{box-shadow: 0 0 35px #ffffff;}
+  100%{box-shadow: 0 0 10px #ffffff;}
+
+}
+
+@media screen and (max-width: 600px) {
+  .possiblerecipe{
+  left:-83%;
+  top: -5%;
+  }
+  .abcd{
+    left:40%;
+  }
+  .badge
+  {
+    margin-top:-20%;
+    padding: 0px 0px 0px;
+    font-size: 5.025px;
+    font-weight: bold;
+    white-space: nowrap;
+    color: #ffffff;
+    background-color: #999999;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+  }
+}
+

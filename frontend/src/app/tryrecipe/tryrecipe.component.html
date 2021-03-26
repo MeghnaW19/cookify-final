@@ -1,0 +1,211 @@
+<!-- Nav Bar -->
+<app-loggednavbar [name]="name"></app-loggednavbar>
+<!-- Head Section -->
+<section id="head-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h1>{{recipe.recipeName}}</h1>
+        <h3>{{recipe.cuisine}}</h3>
+        <br>
+        <form>
+          <ul style="list-style-type:none">
+            <li *ngIf="isEven">
+              <label>Number of people  to serve : {{num-1}}-{{num}}</label>
+              <button [disabled]="isMinusDisabled" id="plus-button" type="button" class="btn btn-dark"
+              (click)="changeserve('minus')" data-type="minus" >
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+              <button id="minus-button" type="button" class="btn btn-dark"
+                (click)="changeserve('plus')" data-type="minus">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+            </li>
+            <li *ngIf="isOdd">
+              <label>Number of people to serve : {{num}}-{{num+1}}</label>
+              <button id="plus-button" type="button" class="btn btn-dark"
+              (click)="changeserve('minus')" data-type="minus" >
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+              <button id="minus-button" type="button" class="btn btn-dark"
+              (click)="changeserve('plus')" data-type="minus">
+                <span class="glyphicon glyphicon-plus"></span>
+              </button>
+            </li>
+          </ul>
+          <br><br>
+          <label >Estimated cooking time : {{cookingTime?.toFixed(1)}} min</label>
+        </form>
+      </div>
+      <div class=col-lg-4>
+        <mat-card>
+            <img mat-card-image src={{recipe.recipeImage}} alt="{{recipe.recipeName}}">
+        </mat-card>
+      </div>
+    </div>
+  </div><br>
+
+</section>
+
+<!-- Ingredients and Procedure -->
+<section id="body-section" class="container">
+  <mat-tab-group [selectedIndex]="matTab">
+    <mat-tab label="Ingredients">
+      <!-- Ingrediants Table -->
+      <h3>List of Ingredients</h3>
+      <table class="table table-striped table-bordered" >
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Ingredient</th>
+            <th scope="col">Quantity Required</th>
+            <th scope="col">Quantity you want to order</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ingredient of recipe?.ingredients; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{ingredient.name}}</td>
+            <td>{{(ingredient.unit=="bowl" || ingredient.unit=="tbs") ? (ingredient.quantity*newnum.toFixed(0)) : (ingredient.quantity*newnum).toFixed(3)}} {{ingredient.unit}}</td>
+            <td>
+              <input type="text" [(ngModel)]=igQuantity[i] placeholder="Enter the quantity of {{ingredient.name}} you want to order" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)||(event.charCode == 46)'>
+              <mat-form-field>
+                <mat-label>Unit</mat-label>
+                <mat-select [(ngModel)]=igUnit[i]>
+                  <mat-option value="kg">Kilogram</mat-option>
+                  <mat-option value="gram">Gram</mat-option>
+                  <mat-option value="litre">Litre</mat-option>
+                  <mat-option value="ml">MilliLitre</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+
+                      <!-- Show user added ingredients row -->
+          </tr>
+          <tr *ngFor="let array of fieldArray; let k = index" [attr.id]="k">
+            <td>{{k+igLength+1}}</td>
+            <td>{{array.name}}</td>
+            <td>{{array.quantity}} {{array.unit}}</td>
+            <td>
+                <input type="text" value="{{array.quantity}}" [(ngModel)]=array.quantity>
+                <mat-form-field>
+                  <mat-label>Unit</mat-label>
+                  <mat-select value="{{array.unit}}" [(ngModel)]=array.unit>
+                    <mat-option value="kg">Kilogram</mat-option>
+                    <mat-option value="gram">Gram</mat-option>
+                    <mat-option value="litre">Litre</mat-option>
+                    <mat-option value="ml">MilliLitre</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button (click)="deleteRow(k)" style="float: right;">
+                  <i class="far fa-trash-alt "></i>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Add more ingredients -->
+      <table class="table table-striped table-bordered">
+        <tr>
+          <td>
+            {{add}}
+          </td>
+          <td>
+            <input class="form-control" type="text" id="newAttributeName" [(ngModel)]="newAttribute.name" name="newAttributeName" style="width: 100%;">
+          </td>
+          <td>
+            <input class="form-control" type="text" id="newAttributeQuantity" [(ngModel)]="newAttribute.quantity" name="newAttributeQuantity" >
+          </td>
+          <td>
+            <input class="form-control" type="text" id="newAttributeQuantity" [(ngModel)]="newAttribute.quantity" name="newAttributeQuantity" >
+          </td>
+          <td>
+            <mat-form-field style="width: 50%;">
+              <mat-label>Unit</mat-label>
+              <mat-select id="newAttributeUnit" [(ngModel)]=newAttribute.unit name="newAttributeUnit" >
+                <mat-option value="kg">Kilogram</mat-option>
+                <mat-option value="gram">Gram</mat-option>
+                <mat-option value="litre">Litre</mat-option>
+                <mat-option value="ml">MilliLitre</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <button class="btn btn-default" type="button" (click)="addFieldValue()">Add</button>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Order -->
+      <button (click)="orderval()" class="btn btn-success">Order</button>
+    </mat-tab>
+
+<!-- Procedure Stages -->
+    <mat-tab label="Start Cooking"><br>
+<!-- Stages Expansion Panel -->
+      <mat-accordion *ngFor="let stage of recipe.procedure?.stages; let j = index">
+        <mat-expansion-panel [(expanded)]="xpandStatus[j]">
+          <mat-expansion-panel-header [ngClass]="head[j]" >
+            <mat-panel-title>
+              <h3 >
+                {{stage.stageName}}
+              </h3>
+            </mat-panel-title>
+            <mat-panel-description >
+              <circle-progress
+              [percent]="timePercent[j]"
+              [outerStrokeColor] = "'#ffff'"
+              [radius] = "20"
+              [space] = "1"
+              [outerStrokeWidth] = "2"
+              [animationDuration] = "0"
+              [showInnerStroke] = "false"
+              [showTitle] = "true"
+              [showUnits] = "true"
+              [titleColor] = "'#ffff'"
+              [unitsColor] = "'#ffff'"
+              [showSubtitle] = "false"
+              [titleFontSize] = "15"
+            ></circle-progress>
+            <mat-card [ngClass]="timer[j]">
+              <strong style="padding-top: 2rem;">{{timeRem[j] | minuteSeconds}} / {{duration[j] | minuteSeconds}}min</strong>
+            </mat-card>
+            </mat-panel-description>
+          </mat-expansion-panel-header><br>
+          <div class="row">
+            <div class="col-sm-10">
+              <ul *ngFor="let step of stage.steps; let i = index ">
+                <li> {{step.stepContent}} </li>
+              </ul>
+            </div>
+            <div class="col-sm-2">
+              <img mat-card-image src={{stage.image}} alt="{{stage.stageName}}">
+            </div>
+          </div>
+          <section class="row">
+            <!-- Start, Pause and Stop timer -->
+            <div *ngIf="showStart[j]">
+              <button type="button" class="btn" (click)='startTimer(j)' style="color: green;">Start Timer</button>
+            </div>
+            <div *ngIf="showRestart[j]">
+                <button type="button" class="btn" (click)='restartTimer(j)' style="color: green;">Restart Stage</button>
+            </div>
+            <div *ngIf="showPause[j]">
+              <button type="button" class="btn" (click)='pauseTimer(j)' style="color: blue;">Pause Timer</button>
+            </div>
+            <div *ngIf="showStop[j]">
+                <button type="button" class="btn" (click)='stopTimer(j)' style="color: red;">Stage Done</button>
+            </div>
+          </section>
+        </mat-expansion-panel><br>
+      </mat-accordion>
+
+      <!-- Navigate to rating  -->
+      <button id="" (click)="openDialog()" type="button" class="btn btn-warning" >Cooking Done</button>
+    </mat-tab>
+</mat-tab-group>
+
+</section> <br><br>
+
+<app-footer></app-footer>

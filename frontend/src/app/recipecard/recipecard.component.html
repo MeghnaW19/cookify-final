@@ -1,0 +1,32 @@
+<div  (click)="tr(id)" style="max-width: 300px;min-width: 250px;">
+    <div class="team-boxrec" >
+            <div class="crop">
+                    <img src="{{image_path}}" style="width: 100%;max-width: 600px;max-height: 350px" alt="">
+            </div>
+
+            <div>
+            <h5 style="color: #CB2520;">  <strong>{{recipe_name}}</strong></h5>
+        </div>
+        <div class="row" >
+            <div class="col-sm-4" style=" color: #78C257">
+                <strong>{{cusine_name}}</strong>
+            </div>
+                <div class="col-sm-4" style="text-align: center">
+
+                <span class="lnr lnr-star" ></span><b> {{rating_value.toFixed(1)}}</b>
+
+            </div>
+            <div class="col-sm-4" style="text-align: end">
+                <strong>{{duration}} min</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6" style="text-align: left">
+                <strong>Serves: {{serve}}</strong>
+            </div>
+            <div class="col-sm-6" style="text-align: end">
+                <b class="position" style="font-size: 14px;">{{master_name}}</b>
+            </div>
+        </div>
+    </div>
+</div>

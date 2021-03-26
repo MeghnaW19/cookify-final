@@ -1,0 +1,39 @@
+<!-- MainMenu-Area -->
+<nav class="mainmenu-area" data-spy="affix" data-offset-top="200" style="position: fixed">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#primary_menu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand"  [routerLink]="['/homecomponent']" ><img src="../assets/homecomponentassets/images/logo_cookify.png"  alt="Logo"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="primary_menu"  >
+      <ul class="nav navbar-nav mainmenu" >
+        <li style="width: 50%;" class="abcd"><input type="text" style="border-radius: 50px;padding: 10px;" #Search class="control" placeholder="Search recipes..." required="required" id="serachvlaue" ></li>
+        <li style="margin-left: 10px;"><button class="bttn-default active searching" mat-mini-fab type="submit" (click)="fn(Search.value)" style="background-color: brown; color:white;"><i class="fa fa-search"></i></button></li>
+        <li><a *ngIf='guestuser==null'[routerLink]="['/dashboard']">Home</a> <a *ngIf='guestuser'[routerLink]="['/homecomponent']">Home</a>  </li>
+        <li style="margin-left: 5px"> <a *ngIf='!guestuser || guestuser==null' style="cursor:none;text-decoration: none;" class="onhoverwelcome" >Welcome {{name}}</a> </li>
+        <li *ngIf='!guestuser || guestuser==null' style="top:7px; margin-left:15px ">
+          <a (click)="login()" style="cursor: pointer;" [matMenuTriggerFor]="menu"><mat-icon >toc</mat-icon></a>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/userprofile']">
+              <mat-icon>account_circle</mat-icon>
+              <span>Profile</span>
+            </button>
+            <!-- <button mat-menu-item>
+              <mat-icon>build</mat-icon>
+              <span>Account Setting</span>
+            </button> -->
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>power_settings_new</mat-icon>
+              <span>Log Out</span>
+            </button>
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- MainMenu-Area-End -->

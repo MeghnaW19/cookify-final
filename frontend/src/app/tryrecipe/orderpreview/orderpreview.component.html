@@ -1,0 +1,321 @@
+<body>
+
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Finding near by delivery man...</p>
+</ngx-spinner>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<app-loggednavbar ></app-loggednavbar>
+<div style="margin-bottom: 80px;">
+
+</div>
+<mat-horizontal-stepper [linear]="true" #stepper style="margin-top: -1%;background: transparent;" >
+      <ng-template matStepLabel>Basket</ng-template>
+<mat-step>
+    <table mat-table [dataSource]="order" class="mat-elevation-z8">
+
+  <!-- No. Columa2n -->
+  <!-- <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let i"> {{i.}} </td>
+  </ng-container> -->
+
+  <!-- Ingredient Column -->
+  <ng-container matColumnDef="ingredient" >
+    <th mat-header-cell *matHeaderCellDef> Ingredient </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Quantity Column -->
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell *matHeaderCellDef> Quantity </th>
+    <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+  </ng-container>
+
+  <!-- Unit Column -->
+  <ng-container matColumnDef="unit">
+    <th mat-header-cell *matHeaderCellDef> Unit </th>
+    <td mat-cell *matCellDef="let element"> {{element.unit}} </td>
+  </ng-container>
+
+  <!-- Row  -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div class="button">
+  <button class="confirmIngredients" (click)="navtopage(0)"  style="padding: 10px; margin-left: 10%; margin-right: 350px; background-color:#fff8f4;" mat-raised-button >Add more Ingredients</button>
+  <button class="confirmIngredients2" style="padding: 10px; margin-left: 10%; background-color:#fff8f4;"mat-raised-button matStepperNext>Confirm Ingredients</button>
+</div>
+
+</mat-step>
+
+
+
+  <mat-step [stepControl]="secondFormGroup" [completed]=true>
+      <ng-template matStepLabel>Address</ng-template>
+
+    <div class="row addr">
+
+      <mat-card class="col-md-5 example-card1" [style.backgroundColor]="">
+
+        <label id="example-radio-group-label" style="background-color: #CB202D; padding: 10px; color:#ffffff;">Select your Address</label>
+
+        <mat-radio-group #radio aria-labelledby="example-radio-group-label" class="example-radio-group"  [(ngModel)]="selectedAddress">
+             <mat-radio-button  class="example-radio-button"  *ngFor="let address of addresses;let i=index" [value]="i" (click)=changebutton() >
+
+                 <!-- <mat-card (click)=fn()>
+            <mat-card-title > {{address.addressName}} </mat-card-title>
+            <mat-card-subtitle *ngIf="display">{{address.name}}</mat-card-subtitle>
+
+               </mat-card> -->
+
+               <mat-accordion>
+
+
+      <mat-expansion-panel class="selectAddr" (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false" >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{address.addressName}}
+      </mat-panel-title> <br>
+      <mat-panel-description>
+        {{address.name}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>{{address.location}},</p>
+    <p>{{address.city}},{{address.state}}-{{address.pin}}</p>
+    <p>{{address.mobileNumber}}</p>
+  </mat-expansion-panel>
+               </mat-accordion>
+          </mat-radio-button>
+
+        </mat-radio-group>
+
+        <button mat-raised-button disabled *ngIf="changedisplay">Submit</button>
+        <button mat-raised-button color="primary" matStepperNext (click)=onClick(selectedAddress) *ngIf="changedisplay2">Submit</button>
+
+
+
+
+
+
+
+      </mat-card>
+      <mat-card class="col-md-5  example-card2" [style.backgroundColor]="">
+          <mat-accordion>
+              <mat-expansion-panel [style.backgroundColor]=""  class="address" >
+                <mat-expansion-panel-header >
+                  <mat-panel-title style="background-color: #CB202D; padding: 10px; color:#ffffff;">
+                    Add Address
+                  </mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <mat-radio-group
+                  aria-labelledby="example-radio-group-label"
+                  class="example-radio-group2"
+                  [(ngModel)]="favoriteSeason">
+                  <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+                    {{season}}
+                  </mat-radio-button>
+                </mat-radio-group>
+                <!-- <div>{{favoriteSeason}}</div> -->
+
+        <form [formGroup]="secondFormGroup">
+
+
+            <mat-form-field class="form1">
+                <textarea #addressName matInput placeholder="Address Type"  formControlName="addressNameCtrl" value="{{favoriteSeason}}" required>{{favoriteSeason}}</textarea>
+              </mat-form-field><br>
+              <!-- <mat-form-field class="form1">
+                <textarea #addressName matInput placeholder="Address Name"  formControlName="secondCtrl" value="{{favoriteSeason}}" required>{{favoriteSeason}}</textarea>
+              </mat-form-field><br> -->
+          <mat-form-field class="form1">
+            <textarea #name matInput placeholder="Name"  formControlName="nameCtrl" required></textarea>
+          </mat-form-field>
+          <br>
+          <mat-form-field class="form1">
+            <input #mobile matInput placeholder="Mobile No" formControlName="mobileCtrl" required>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input #address matInput placeholder="Address" formControlName="addressCtrl" required>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input #city matInput placeholder="City / District" formControlName="cityCtrl" required>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input #state matInput placeholder="State" formControlName="stateCtrl" required>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input #pin  matInput placeholder="Pin Code" formControlName="pinCtrl" required>
+          </mat-form-field>
+        </form>
+        <button mat-button id="saveAddress" [disabled]="!secondFormGroup.valid" (click)="saveAddress(addressName.value,name.value,mobile.value,address.value,city.value,state.value,pin.value)">Save</button>
+        <button mat-button id="cancelAddress" (click)="cancelAddress()">Cancel</button>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+      </mat-card>
+
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Summary</ng-template>
+
+    <!-- <div *ngIf='!orderplaced'>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext (click)=onClick()>Confirm</button>
+    </div> -->
+
+
+
+    <div *ngIf='orderplaced'>
+
+
+
+    <div style="max-width: 100%;min-width: 250px;padding: 30px;margin-top: -5%;">
+
+
+
+
+        <div (click)="tr(id)" class="team-boxrec" >
+          <div  style="text-align: center;">
+              <h3><strong>Order Placed</strong></h3>
+
+          </div>
+
+          <div style="text-align: right">
+
+              <button type="button"  (click)="getbacktocooking()" matTooltip="Stage is a part of recipe " [matTooltipPosition]="positionOptions" style="background: #CB202D;border: 0;" class="btn-outline" class="btn btn-secondary">Order Delivered? Let's cook</button>
+
+          </div>
+
+
+                <div>
+                <h5 style="color: #CB2520;">  <strong>Order Id: {{od?.orderId}} </strong></h5>
+                </div>
+
+
+
+                <div class="row" >
+                    <div class="col-sm-4">
+                        <strong>Recipent Name: {{od?.address.name==""?od.username:od?.address.name}} </strong>
+                    </div>
+
+
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-6" style="text-align: left">
+                        <strong>Recipent Address:  {{od?.address.addressName}}  </strong>
+
+
+                    </div>
+
+
+                </div>
+                <hr>
+
+                <div>
+                    <!-- <div class="col-sm-6" style="text-align: left">
+                        <strong>Delivery Valet:  {{od?.deliveryUsername}} </strong>
+                        <br>
+                        <strong>Delivery mobile Number: {{od?.deliveryGuy?.mobileNumber}}</strong>
+
+                    </div> -->
+                    <div>
+                        <span class="lnr lnr-clock" ></span><strong> Estimated Delivery Time: {{deliveryTime.toFixed(0)}} mins </strong>
+                    </div>
+
+                </div>
+                <hr>
+                <div style="text-align: center;">
+                    <span class="badge badge-error">Your Order Details</span>
+                </div>
+
+                <div style="margin-top: -5%;">
+
+
+
+                <table mat-table [dataSource]="order" class="mat-elevation-z3">
+
+                    <!-- No. Columa2n -->
+                    <!-- <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef> No. </th>
+                      <td mat-cell *matCellDef="let i"> {{i.}} </td>
+                    </ng-container> -->
+
+                    <!-- Ingredient Column -->
+                    <ng-container matColumnDef="ingredient" >
+                      <th mat-header-cell *matHeaderCellDef> Ingredient </th>
+                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <!-- Quantity Column -->
+                    <ng-container matColumnDef="quantity">
+                      <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                      <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                    </ng-container>
+
+                    <!-- Unit Column -->
+                    <ng-container matColumnDef="unit">
+                      <th mat-header-cell *matHeaderCellDef> Unit </th>
+                      <td mat-cell *matCellDef="let element"> {{element.unit}} </td>
+                    </ng-container>
+
+                    <!-- Row  -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                </div>
+
+
+
+        </div>
+    </div>
+
+    </div>
+
+
+
+  </mat-step>
+</mat-horizontal-stepper>
+<div style="margin-top:200px;">
+  <app-footer></app-footer>
+
+</div>
+</body>
+

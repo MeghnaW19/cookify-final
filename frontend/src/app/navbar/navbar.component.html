@@ -1,0 +1,28 @@
+<!-- MainMenu-Area -->
+<nav class="mainmenu-area" data-spy="affix" data-offset-top="200">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#primary_menu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" [routerLink]="['/homecomponent']"><img src="../../assets/homecomponentassets/images/logo_cookify.png" alt="Cookify"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="primary_menu">
+            <ul class="nav navbar-nav mainmenu linkcursor">
+                <li class="active"><a [ngx-scroll-to]="'#home_page'">Home</a></li>
+                <li><a [ngx-scroll-to]="'#trending_page'" >Trending</a></li>
+                <li><a [ngx-scroll-to]="'#about_page'" >About</a></li>
+                <li><a [ngx-scroll-to]="'#features_page'"  >Features</a></li>
+                <li><a [ngx-scroll-to]="'#contact_page'">Contacts</a></li>
+            </ul>
+
+            <div class="right-button hidden-xs pp">
+                <a *ngIf='!loggedin' (click)="login()" style="cursor: pointer" >Login</a>
+                <a *ngIf='loggedin' [routerLink]="['/dashboard']" style="cursor: pointer" >DashBoard</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- MainMenu-Area-End -->

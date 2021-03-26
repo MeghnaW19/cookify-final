@@ -1,0 +1,27 @@
+<section class="container" class="body">
+  <div  mat-dialog-title class="body">Hope you enjoyed cooking!</div>
+  <div mat-dialog-content class="body">
+    <p id="rate">Rate Recipe</p>
+    <rating [max]="5" #rating [customTemplate]="tt"></rating>
+    <ng-template #tt let-i="index" let-v="value">
+      <button class="btn btn-{{i < v ? 'warning' : 'default'}}">
+        {{i < v ? '&#9733;' : '&#9734;'}}
+      </button>
+    </ng-template>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Add comments here</mat-label>
+        <textarea matInput placeholder="Textarea" #comments></textarea>
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Your comments are valuable</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button class="btn btn-warning" [mat-dialog-close]="rating.value" cdkFocusInitial (click)=onClick(rating.value,comments.value)>Rate</button>
+    <button mat-button class="btn btn-outline-danger" (click)="onNoClick()" style="color: red;">Rate Later</button>
+  </div>
+</section>
+  
+<br><br>
+  

@@ -1,0 +1,92 @@
+
+.sidenav {
+  height: 90%;
+  width: 260px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: white;
+  overflow-x: hidden;
+  box-shadow: 5px 10px 10px -6px #818181;
+  padding: 20px;
+  margin-top: 80px;
+  margin-left: 10px;
+  border-radius:10px;
+
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.hoverup{
+  border: 2px;
+}
+
+.main {
+  overflow: hidden;
+  /*width: 90%;*/
+  margin-left: 0%; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+@media screen and (min-width: 480px) {
+  .abcd{
+    left:70%;
+  }
+}
+.abcd{
+  left:80%;
+}
+   
+.publishicon{
+  animation: publish 1s infinite ease-in-out alternate-reverse;
+}
+
+@keyframes publish{
+  0%{
+    transform: translateY(0px); 
+  }
+  100%{
+    transform: translateY(15px);
+  }
+}
+
+.badge {
+  padding: 1px 9px 2px;
+  font-size: 12.025px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #999999;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.badge:hover {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.badge-error {
+  background-color: #CB202D;
+}
+
+

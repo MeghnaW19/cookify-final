@@ -1,0 +1,116 @@
+#head-section {
+    margin-top: 15rem;
+}
+#serve-form {
+    text-align: unset;
+}
+#plus-button {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+#head-section h1 {
+    color: #CB202D;
+    text-align: center;
+}
+#head-section h3 {
+    color: #eb4653;
+    text-align: center;
+}
+#head-section label {
+    font-size: 2rem;
+}
+#body-section h3 {
+    text-align: center;
+     color: #CB202D;
+}
+th, td{
+    text-align: center;
+}
+input {
+    width: 60%;
+}
+.mat-expansion-panel-header-title h3 {
+    color: #ffff !important;
+}
+.mat-expansion-panel-header-description {
+    color: #ffff;
+     justify-content: flex-end;
+}
+.normal {
+    background: #CB202D;
+}
+.normal:hover{
+    background: #Aa191f !important;
+}
+.normal.mat-expanded:active{
+    background: #8a191f !important;
+}
+.normal.mat-expanded:focus {
+    background-color: #8a191f;
+}
+.normal.mat-expanded {
+    background-color: #8a191f;
+}
+.ongoing {
+    background: orange;
+}
+.ongoing:hover{
+    background: orange !important;
+}
+.ongoing.mat-expanded:active{
+    background: orange !important;
+}
+.ongoing.mat-expanded:focus {
+    background-color: orange;
+}
+.ongoing.mat-expanded {
+    background-color: orange;
+}
+.completed {
+    background: green;
+}
+.completed:hover{
+    background: rgb(0, 121, 0) !important;
+}
+.completed.mat-expanded:active{
+    background: rgb(0, 109, 0) !important;
+}
+.completed.mat-expanded:focus {
+    background-color: rgb(0, 109, 0) !important;
+}
+.completed.mat-expanded {
+    background-color: rgb(0, 109, 0) !important;
+}
+.normalTimer {
+    background: #ffff;
+    color: #8a191f;
+    font-family: 'digital-clock-font';
+}
+.ongoingTimer {
+    background: #ffff;
+    color: orange;
+    font-family: 'digital-clock-font';
+}
+.completedTimer {
+    background: #ffff;
+    color: green;
+    font-family: 'digital-clock-font';
+}
+/* If the screen size is 600px wide or less, hide the element */
+@media only screen and (max-width: 768px) {
+    .mat-expansion-panel-header
+    {
+        height: 60px !important;
+    }
+    .mat-expansion-panel-header-title h3 {
+        color: #ffff !important;
+        font-size: 12px;
+    }
+    .mat-expansion-panel-header-description circle-progress {
+        padding-top: 15px;
+    }
+
+  }
+
+
+

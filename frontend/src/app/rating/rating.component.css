@@ -1,0 +1,43 @@
+section {
+    width: 300px;
+    margin: auto;
+    text-align: center;
+}
+h1 {
+    color: #CB202D;
+}
+#rate {
+    color: #eb4653;
+}
+button {
+    margin-right: 0.5rem;
+}
+.mat-dialog-actions {
+    justify-content: center;
+}
+.mat-dialog-title {
+    color: #CB202D;
+}
+.mat-form-field {
+    width: 30rem;
+}
+@media only screen and (max-width: 450px) {
+    section {
+        width: 250px;
+        margin: auto;
+        text-align: center;
+    }
+    .mat-form-field {
+        width: 25rem;
+    }
+}
+@media only screen and (max-width: 350px)  {
+    section {
+        width: 230px;
+        margin: auto;
+        text-align: center;
+    }
+    .mat-form-field {
+        width: 22rem;
+    }
+}

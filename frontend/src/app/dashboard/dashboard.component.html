@@ -1,0 +1,52 @@
+<app-loggednavbar [name]="name"></app-loggednavbar>
+
+<div class="container-fluid" style="margin-top: 60px;width: 100%;margin-right: 0;margin-left: 0;background: #FAFAFA">
+
+
+
+
+
+    <div class="service-box wow fadeInUp abcd" data-wow-delay="0.2s" style="position: fixed; margin-top: 450px;z-index: 9999;">
+        <div style="align-items: center; cursor: pointer;" class="publishicon" [routerLink]="['/publish-recipe']">
+                <img style="width: 70%;margin-top: -50px;" src="../../assets/homecomponentassets/images/about-logo.png" alt="About Logo">
+                <span class="badge badge-error">Publish Recipe</span>
+
+        </div>
+
+
+    </div>
+
+    <div cdkDrag class="service-box wow fadeInUp" data-wow-delay="0.2s" style="margin-top: 50px;position: fixed;z-index: 9999;">
+      <div matTooltip="Search recipes with the ingredients you have"  class="plus">
+
+          <button [routerLink]="['/possiblerecipes']"><span class="lnr lnr-magic-wand"></span></button>
+
+      </div>
+  </div>
+
+              <div class="main">
+                    <div  style="display: flex; flex-direction: column;padding: 35px;margin-top: 30px;margin-right: 0px;">
+
+
+                            <app-recommeded></app-recommeded>
+
+
+                    </div>
+                    <div id="trending" style="display: flex; flex-direction: column;padding-left: 40px;padding-right: 40px;padding-top: 40px;">
+                      <app-recommendedbyactivities></app-recommendedbyactivities>
+
+
+
+                    </div>
+
+                <div id="recommhyst" style="display: flex; flex-direction: column;padding-left: 40px;padding-right: 40px;">
+                  <app-dashboardtrending></app-dashboardtrending>
+
+                </div>
+
+                 </div>
+
+              </div>
+
+
+<app-footer></app-footer>

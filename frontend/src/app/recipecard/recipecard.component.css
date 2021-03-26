@@ -1,0 +1,17 @@
+.crop{
+    position: relative;
+    width: 220px;
+    height: 140px;
+    overflow: hidden;/*reset margin of figure tag*/
+  }
+  .crop img{
+    border-radius: 2px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+  }

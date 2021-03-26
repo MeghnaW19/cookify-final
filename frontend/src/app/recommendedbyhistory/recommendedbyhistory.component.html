@@ -1,0 +1,47 @@
+
+<section class="testimonial-area" id="trending_page" style="margin-top: 60px;">
+    <br>
+    <div class="container" style="margin-top: 0px;">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title text-center">
+                    <h5 class="title">Recommended Recipe</h5>
+                    <h3 class="dark-color">Based on your history</h3>
+                    <div class="space-60"></div>
+                </div>
+            </div>
+        </div>
+        <div
+        ng2-carouselamos
+        [width]="1000"
+        [items]=recipe
+        (onSelectedItem)="tr($event.item.id)"
+        [$item]="itemTemplate"
+        [$prev]="prevTemplate"
+        [$next]="nextTemplate" >
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="team-slide">
+                    <ng-template #prevTemplate>
+                        <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="box-icon">
+                                <i class="lnr lnr-chevron-left"></i>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-item let-i="index" #itemTemplate >
+                        <app-recipecard [recipe_name]="item.recipeName" [image_path]="item.recipeImage" [cusine_name]="item.cusine" [serve]="item.servesFor" [duration]="item.duration" [published_on]="item.publishedOn" [master_name]="item.publishedBy" [rating_value]="item.rating" ></app-recipecard>
+                    </ng-template>
+                    <ng-template #nextTemplate>
+                        <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="box-icon">
+                                <i class="lnr lnr-chevron-right"></i>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

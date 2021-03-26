@@ -1,0 +1,73 @@
+<ng-template *ngIf="recipe.length;then thenBlock;else elseBlock;"></ng-template>
+<ng-template #thenBlock>
+<section class="testimonial-area" id="trending_page" style="margin-top: -22%;margin-bottom: 70px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="page-title text-left" style="margin-left: 100px">
+          <h5 class="title">Recommendations From Your Previous Activities</h5>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: -35px;margin-bottom: 30px"
+    ng2-carouselamos
+    [width]="1200"
+    [items]=recipe
+    (onSelectedItem)="selectedItem = $event.item; selectedIndex = $event.index"
+    [$item]="itemTemplate"
+    [$prev]="prevTemplate"
+    [$next]="nextTemplate" >
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <div class="team-slide">
+          <ng-template #prevTemplate>
+            <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+              <div class="box-icon">
+                <i class="lnr lnr-chevron-left"></i>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template let-item let-i="index" #itemTemplate >
+            <app-dashboardrecipecard  [id]="item?.id" [recipe_name]="item?.recipeName" [image_path]="item?.recipeImage" [cusine_name]="item.cuisine" [serve]="item.servesFor" [duration]="item.cookingTime" [published_on]="item.publishedOn" [master_name]="item.publishedBy" [rating_value]="item.rating" ></app-dashboardrecipecard>
+          </ng-template>
+          <ng-template #nextTemplate>
+            <div class="service-box wow fadeInUp" data-wow-delay="0.2s">
+              <div class="box-icon">
+                <i class="lnr lnr-chevron-right"></i>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</ng-template>
+<!--<ng-template #elseBlock>-->
+<!--  <section class="testimonial-area"  style="margin-top: -22%">-->
+<!--    <div class="container">-->
+<!--      <div class="row">-->
+<!--        <div class="col-xs-12">-->
+<!--          <div class="page-title text-left" style="margin-left: 100px">-->
+<!--            <h5 class="title">Recommendations From Your Previous Activities</h5>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div style="margin-top: -35px;margin-bottom: 30px"-->
+<!--           ng2-carouselamos-->
+<!--           [width]="1200"-->
+<!--           [items]=recipe-->
+<!--           (onSelectedItem)="selectedItem = $event.item; selectedIndex = $event.index"-->
+<!--           [$item]="itemTemplate"-->
+<!--           [$prev]="prevTemplate"-->
+<!--           [$next]="nextTemplate" >-->
+<!--      </div>-->
+<!--      <div class="row" style="margin-left: 70px ;font-size: 15px">-->
+<!--        <p>To Get Recommendations Like or Try Some Recipes</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+<!--</ng-template>-->
+
+

@@ -1,0 +1,71 @@
+{
+    "user":[
+        {
+            "id":1,
+            "userName": "barunsaraf1",
+            "name": "Barun Sarraf",
+            "email": "barunsaraf1@gmail.com",
+            "city": "Nepal",
+            "gender": "Male",
+            "image": "../../assets/homecomponentassets/images/blog-3.jpg",
+            "age": 22,
+            "recipesPublished": [
+                {
+                    "recipeId":1,
+                    "recipeName": "Matar Paneer",
+                    "userName": "barunsaraf1",
+                    "description": "description here",
+                    "serves": 4,
+                    "ingredients": [
+                        {
+                            "category": "spicy",
+                            "name": "chilly",
+                            "measurnment": "2.3 spoon"
+                        }
+                    ],
+                    "procedure": null,
+                    "cuisine": "Italian",
+                    "images": "../../assets/homecomponentassets/images/image256.jpg",
+                    "cookingTime": "3 hr",
+                    "rating": 4,
+                    "price": 100,
+                    "publishedOn": "22-09-2015",
+                    "publishedBy": "barunsaraf1",
+                    "comment": [],
+                    "ratingList": [],
+                    "courseType": "Lunch"
+                }
+            ],
+            "recipesLiked": [{
+                "recipeId":1,
+                "recipeName": "Shahi Paneer",
+                "userName": "barunsaraf1",
+                "description": "description here",
+                "serves": 4,
+                "ingredients": [
+                    {
+                        "category": "spicy",
+                        "name": "chilly",
+                        "measurnment": "2.3 spoon"
+                    }
+                ],
+                "procedure": null,
+                "cuisine": "Indian",
+                "images": "../../assets/homecomponentassets/images/image256.jpg",
+                "cookingTime": "3 hr",
+                "rating": 4,
+                "price": 100,
+                "publishedOn": "22-09-2015",
+                "publishedBy": "barunsaraf1",
+                "comment": [],
+                "ratingList": [],
+                "courseType": "Lunch"
+            }],
+            "recipesTried": null,
+            "address": null,
+            "deliveryStatus": null,
+            "cookingStatus": null,
+            "prefferedCuisines": null
+         }
+    ]
+}

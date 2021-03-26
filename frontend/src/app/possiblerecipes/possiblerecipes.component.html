@@ -1,0 +1,93 @@
+<body>
+<app-loggednavbar [name]="name"></app-loggednavbar>
+<mat-card class="container ingredientsList" >
+  <mat-card-title class="heading">Commonly used ingredients</mat-card-title>
+  <mat-chip-list >
+    <mat-chip style="background-color: #e3f2fd"
+      *ngFor="let ingredient of commonlyUsedIngredients"
+      [selectable]="selectable"
+      (click)="addToform(ingredient)">
+      {{ingredient}}
+    </mat-chip>
+  </mat-chip-list>
+</mat-card>
+<div class="container " style="padding-top: 40px;" >
+  <form>
+    <mat-form-field class="demo-chip-list">
+      <mat-chip-list #chipList>
+        <mat-chip style="background-color: #c5e1a5"
+          *ngFor="let ingredient of ingredients"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(ingredient)">
+          {{ingredient}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input title="please select items from the search results"
+          placeholder="Input Ingredients..."
+          (mouseup)="getAllIngredients($event)"
+          #ingredientInput
+          [formControl]="ingredientCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)"
+        />
+      </mat-chip-list>
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient">
+          {{ ingredient }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <div align="right">
+
+    <a  style="color: white;cursor: pointer;" class="bttn-default wow fadeInUp" (click)="showPossibleRecipes()" data-wow-delay="0.5s">Search Recipes</a>
+  </div>
+</div>
+
+
+
+
+<div class="container ">
+  <div class="row">
+    <div *ngIf="recipe.length==0">No recipes found.Try adding/deleting ingredients.</div>
+    <div *ngFor="let recipe of recipe">
+      <div style="max-width: 280px;min-width: 280px;">
+        <div (click)="tr(recipe.id)" class="team-boxrec" style="font-size: 12px;background: white" >
+          <div class="crop">
+            <img src="{{recipe.recipeImage}}" style="width: 100%" alt="recipe image">
+          </div>
+          <div>
+            <strong><h5 style="color: #CB2520;">{{recipe.recipeName}}</h5></strong>
+          </div>
+          <div class="row" >
+            <div class="col-sm-4" style=" color: #78C257">
+              <strong>{{recipe.cuisine}}</strong>
+            </div>
+            <div class="col-sm-4" style="text-align: center">
+              <span class="lnr lnr-star" ></span><b> {{recipe.rating.toFixed(1)}}</b>
+
+            </div>
+            <div class="col-sm-4" style="text-align: end">
+              <strong>{{recipe.cookingTime}} min </strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6" style="text-align: left;font-size: 12px;">
+              <strong>Serve: {{recipe.servesFor}}</strong>
+            </div>
+            <div class="col-sm-6" style="text-align: end">
+              <b class="position" style="font-size: 12px;">{{recipe.publishedBy}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>

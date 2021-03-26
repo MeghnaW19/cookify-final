@@ -1,0 +1,214 @@
+version: '3'
+
+services:
+  eureka-server:
+    build: eureka-server/
+    container_name: eureka-server
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - 8085:8085
+
+  config-server:
+    build: config-server/
+    container_name: config-server
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - 8888:8888
+
+  api-gateway:
+    build: api-gateway/
+    container_name: api-gateway
+    depends_on:
+      - config-server
+      - eureka-server
+      - recipe-service
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - 8080:8080
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    network_mode: host
+    volumes:
+      - $HOME/mongo:/data/db
+
+  mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: LoginDB
+      MYSQL_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - $HOME/data/datasql:/var/lib/mysql
+    network_mode: "host"
+    hostname: localhost
+    restart: always
+
+  user-login-service:
+    build: user-login-service/
+    image: user-login-service:1.0.0
+    container_name: user-login-service
+    depends_on:
+      - config-server
+      - eureka-server
+      - rabbitmq
+      - mysql
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - 8081:8081
+
+  user-profile-service:
+    build: user-profile-service/
+    image: userprofileservice:1.0.0
+    container_name: userprofileservice
+    depends_on:
+      - config-server
+      - rabbitmq
+      - mongo
+      - eureka-server
+      - user-login-service
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - 8111:8111
+
+  recipe-service:
+    build: recipe-service/
+    image: recipeservice
+    container_name: recipe-service
+    depends_on:
+      - eureka-server
+      - mongo
+      - config-server
+    network_mode: "host"
+    hostname: localhost
+    restart: always
+    ports:
+      - 8082:8082
+
+  recommendation-service:
+    build: recommendation-service/
+    container_name: recommendation-service
+    depends_on:
+      - config-server
+      - rabbitmq
+      - eureka-server
+      - neo4jdb
+      - recipe-service
+      - user-profile-service
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - 8096:8096
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    hostname: localhost
+
+
+  neo4jdb:
+    image: neo4j:latest
+    container_name: testneo4j
+    volumes:
+      - $HOME/ne04j/data:/data
+      - $HOME/ne04j/import:/var/lib/neo4j/import
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      - NEO4J_AUTH=neo4j/test
+    network_mode: "host"
+    hostname: localhost
+    restart: always
+
+  delivery-service:
+    build: delivery-service/
+    image: delivery-service
+    container_name: delivery-service
+    depends_on:
+      - config-server
+      - eureka-server
+      - mongo
+    restart: always
+    network_mode: "host"
+    hostname: localhost
+    ports:
+      - 8095:8095
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    restart: always
+    network_mode: host
+    hostname: localhost
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    network_mode: "host"
+    hostname: localhost
+
+
+  cookify-frontend:
+    build: frontend/
+    container_name: cookify-frontend-container
+    network_mode: "host"
+    hostname: localhost
+    restart: always
+    ports:
+      - "4200:4200"
+
+  json-server:
+    image: vimagick/json-server
+    command: -H 0.0.0.0 -p 3010 -w cookify.json
+    ports:
+      - "3010:3010"
+    volumes:
+      - ./data:/data
+    restart: always
+    
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    restart: always
+    ports:
+      - 8001:8000
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+      
+volumes:
+  portainer_data:
+

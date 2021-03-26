@@ -1,0 +1,28 @@
+{
+    "country":[
+        {
+            "id":1,
+            "city":"Bangalore",
+            "state":"Karnataka",
+            "country":"India"
+        },
+        {
+            "id":2,
+            "city":"Hyderabad",
+            "state":"Telengana",
+            "country":"India"
+        },
+        {
+            "id":3,
+            "city":"Mumbai",
+            "state":"Maharashtra",
+            "country":"India"
+        },
+        {
+            "id":4,
+            "city":"Kolkata",
+            "state":"West Bengal",
+            "country":"India"
+        }
+    ]
+}
